@@ -38,14 +38,14 @@ namespace FanOutFanInCrawler
             ILogger log)
         {
             // Function input comes from the request content.
-            string instanceId = await client.StartNewAsync("Orchestrator", null, "Nuget");
+            string instanceId = await client.StartNewAsync("GetRepoIssues", null, "Nuget");
 
             log.LogInformation($"Started orchestration with ID = '{instanceId}'.");
 
             return client.CreateCheckStatusResponse(req, instanceId);
         }
 
-        [FunctionName("Orchestrator")]
+        [FunctionName("GetRepoIssues")]
         public static async Task<string> RunOrchestrator(
             [OrchestrationTrigger] IDurableOrchestrationContext context)
         {
@@ -56,7 +56,7 @@ namespace FanOutFanInCrawler
 
             // Creates an array of task to store the result of each functions
             var tasks = new Task<(long id, int openedIssues, string name)>[repositories.Count];
-            for (int i = 0; i < repositories.Count; i++)
+            for (int i = 0; i < repositories.Count; i++) // Take only first 50 repositories
             {
                 // Starting a `GetOpenedIssues` activity WITHOUT `async`
                 // This will starts Activity Functions in parallel instead of sequentially.

@@ -14,7 +14,7 @@ using Octokit;
 // Durability is a key feature of Azure Functions. It allows you to write stateful functions in a serverless environment.
 // Durability is achieved by saving the state of the function to a storage provider.
 // Azure Functions supports Azure Storage and Azure Cosmos DB as storage providers.
-// DEMO 
+// DEMO for Azure Brown Bag - 11/30/2023
 
 namespace FanOutFanInCrawler
 {
